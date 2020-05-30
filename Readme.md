@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Pavels Kovalenoks](https://up.htmlacademy.ru/javascript/20/user/452937).
-* Наставник: `Неизвестно`.
+* Наставник: `Ярослав Ермилов`.
 
 ---
 
