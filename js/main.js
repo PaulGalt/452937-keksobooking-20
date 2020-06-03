@@ -7,13 +7,9 @@ var MIN_LOCATION_Y = 130;
 var MAX_LOCATION_Y = 630;
 
 var ads = [];
-
-var offerTypeArr = ['palace', 'flat', 'house', 'bungalo'];
+var typeArr = ['palace', 'flat', 'house', 'bungalo'];
 var timeArr = ['12.00', '13.00', '14.00'];
-var featuresArr = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var descriptionOffer = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer aliquet eget risus nec pharetra. Suspendisse ipsum nunc, laoreet ut vehicula quis, pretium vitae nisl. Etiam gravida quam pretium faucibus faucibus. Aenean est ex, egestas non ante vitae, dapibus eleifend purus. Fusce mauris ante, tincidunt nec lacinia at, lobortis quis dolor.';
-var photosArr = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-
 
 function getRandomNumber(max, min) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -35,36 +31,18 @@ function getOfferTitleArr() {
   return offerTitleArr;
 }
 
-function getOfferTitle() {
-  return getOfferTitleArr()[getRandomNumber(getOfferTitleArr().length - 1, 0)];
-}
-
-function getOfferType() {
-  return offerTypeArr[getRandomNumber(3, 0)];
-}
-
-function getOfferPrice() {
-  return (getRandomNumber(1000000, 0));
-}
-
-function getOfferRooms() {
-  return getRandomNumber(5, 1);
-}
-
-function getOfferGuest() {
-  return getRandomNumber(5, 1);
-}
-
-function getOfferTime() {
-  return timeArr[getRandomNumber(2, 0)];
+function getArrowElement(arr, max, min) {
+  return arr[getRandomNumber(max, min)];
 }
 
 function getOfferFeatures() {
-  return getUniqueElements(featuresArr, 5, 0);
+  var featuresArr = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+  return getUniqueElements(featuresArr, featuresArr.length - 1, 0);
 }
 
 function getOfferPhotos() {
-  return getUniqueElements(photosArr, 3, 1);
+  var photosArr = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+  return getUniqueElements(photosArr, photosArr.length - 1, 1);
 }
 
 function getUniqueElements(arr, maxQty, minQty) {
@@ -81,13 +59,13 @@ function getUniqueElements(arr, maxQty, minQty) {
 function getAd(ad) {
   ad.location.x = getRandomNumber(MAX_LOCATION_X, MIN_LOCATION_X);
   ad.location.y = getRandomNumber(MAX_LOCATION_Y, MIN_LOCATION_Y);
-  ad.offer.title = getOfferTitle();
+  ad.offer.title = getArrowElement(getOfferTitleArr(), getOfferTitleArr().length - 1, 0);
   ad.offer.address = ad.location.x + ', ' + ad.location.y;
-  ad.offer.price = getOfferPrice();
-  ad.offer.type = getOfferType();
-  ad.offer.rooms = getOfferRooms();
-  ad.offer.guests = getOfferGuest();
-  ad.offer.checkin = getOfferTime();
+  ad.offer.price = getRandomNumber(1000000, 0);
+  ad.offer.type = getArrowElement(typeArr, typeArr.length - 1, 0);
+  ad.offer.rooms = getRandomNumber(5, 1);
+  ad.offer.guests = getRandomNumber(5, 1);
+  ad.offer.checkin = getArrowElement(timeArr, timeArr.length - 1, 0);
   ad.offer.checkout = ad.offer.checkin;
   ad.offer.features = getOfferFeatures();
   ad.offer.description = descriptionOffer;
@@ -130,8 +108,5 @@ function getAds(numberAds) {
   return ads;
 }
 
-getAds(NUMBER_ADS);
-
-
-console.log(ads);
-
+var map = document.querySelector('.map');
+map.classList.remove('map--faded');
