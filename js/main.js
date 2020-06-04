@@ -1,10 +1,12 @@
 'use strict';
 
 var NUMBER_ADS = 8;
-var MIN_LOCATION_X = 200;
-var MAX_LOCATION_X = 900;
+var MIN_LOCATION_X = 0;
+var MAX_LOCATION_X = 1200;
 var MIN_LOCATION_Y = 130;
 var MAX_LOCATION_Y = 630;
+var PIN_X = 50;
+var PIN_Y = 70;
 
 var ads = [];
 var typeArr = ['palace', 'flat', 'house', 'bungalo'];
@@ -15,10 +17,10 @@ function getRandomNumber(max, min) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function getAvatarArr(numberAds) {
+function getAvatarArr() {
   var avatarArr = [];
-  for (var i = 0; i < numberAds; i++) {
-    avatarArr[i] = 'img/avatars/user0' + (i + 1);
+  for (var i = 0; i < NUMBER_ADS; i++) {
+    avatarArr[i] = 'img/avatars/user0' + (i + 1) + '.png';
   }
   return avatarArr;
 }
@@ -75,7 +77,7 @@ function getAd(ad) {
 }
 
 function getAds(numberAds) {
-  var avatarArr = getAvatarArr(numberAds);
+  var avatarArr = getAvatarArr();
   for (var i = 0; i < numberAds; i++) {
     var ad = {
       author: {
@@ -108,5 +110,28 @@ function getAds(numberAds) {
   return ads;
 }
 
+getAds(NUMBER_ADS);
+
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
+
+
+function createNewElements() {
+  var template = document.querySelector('#pin').content.querySelector('.map__pin');
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < NUMBER_ADS; i++) {
+    var newElement = template.cloneNode(true);
+    newElement.style = 'left: ' + (ads[i].location.x - PIN_X / 2) + 'px; top: ' + (ads[i].location.y - PIN_Y) + 'px;';
+    newElement.querySelector('img').src = ads[i].author.avatar;
+    newElement.querySelector('img').alt = ads[i].offer.title;
+    fragment.appendChild(newElement);
+  }
+  return fragment;
+}
+
+function renderingNewElements() {
+  var mapPins = document.querySelector('.map__pins');
+  mapPins.appendChild(createNewElements());
+}
+
+renderingNewElements();
