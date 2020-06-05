@@ -1,6 +1,6 @@
 'use strict';
 
-var NUMBER_ADS = 8;
+var NUMBER_AD = 8;
 var MIN_LOCATION_X = 0;
 var MAX_LOCATION_X = 1200;
 var MIN_LOCATION_Y = 130;
@@ -9,65 +9,65 @@ var PIN_X = 50;
 var PIN_Y = 70;
 
 var ads = [];
-var typeArr = ['palace', 'flat', 'house', 'bungalo'];
-var timeArr = ['12.00', '13.00', '14.00'];
+var propertyTypes = ['palace', 'flat', 'house', 'bungalo'];
+var controlTimes = ['12.00', '13.00', '14.00'];
 var descriptionOffer = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer aliquet eget risus nec pharetra. Suspendisse ipsum nunc, laoreet ut vehicula quis, pretium vitae nisl. Etiam gravida quam pretium faucibus faucibus. Aenean est ex, egestas non ante vitae, dapibus eleifend purus. Fusce mauris ante, tincidunt nec lacinia at, lobortis quis dolor.';
 
-function getRandomNumber(max, min) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+function getRandomNumber(maxValue, minValue) {
+  return Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
 }
 
-function getAvatarArr() {
-  var avatarArr = [];
-  for (var i = 0; i < NUMBER_ADS; i++) {
-    avatarArr[i] = 'img/avatars/user0' + (i + 1) + '.png';
+function getAvatars() {
+  var avatars = [];
+  for (var i = 0; i < NUMBER_AD; i++) {
+    avatars[i] = 'img/avatars/user0' + (i + 1) + '.png';
   }
-  return avatarArr;
+  return avatars;
 }
 
-function getOfferTitleArr() {
-  var offerTitleArr = [];
-  for (var i = 0; i < NUMBER_ADS; i++) {
-    offerTitleArr[i] = 'Lorem Ipsum - ' + (i + 1);
+function getOfferTitles() {
+  var offerTitles = [];
+  for (var i = 0; i < NUMBER_AD; i++) {
+    offerTitles[i] = 'Lorem Ipsum - ' + (i + 1);
   }
-  return offerTitleArr;
+  return offerTitles;
 }
 
-function getArrowElement(arr, max, min) {
-  return arr[getRandomNumber(max, min)];
+function getElements(items, maxValue, minValue) {
+  return items[getRandomNumber(maxValue, minValue)];
 }
 
 function getOfferFeatures() {
-  var featuresArr = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-  return getUniqueElements(featuresArr, featuresArr.length - 1, 0);
+  var features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+  return getUniqueElements(features, features.length - 1, 0);
 }
 
 function getOfferPhotos() {
-  var photosArr = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-  return getUniqueElements(photosArr, photosArr.length - 1, 1);
+  var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+  return getUniqueElements(photos, photos.length - 1, 1);
 }
 
-function getUniqueElements(arr, maxQty, minQty) {
-  var qtyElements = getRandomNumber(maxQty, minQty);
-  var elementArr = [];
-  for (var i = 0; i < qtyElements; i++) {
-    var randomElementNumber = getRandomNumber(arr.length - 1, 0);
-    elementArr[i] = arr[randomElementNumber];
-    arr.splice(randomElementNumber, 1);
+function getUniqueElements(items, maxValue, minValue) {
+  var elementsCount = getRandomNumber(maxValue, minValue);
+  var elements = [];
+  for (var i = 0; i < elementsCount; i++) {
+    var randomElementNumber = getRandomNumber(items.length - 1, 0);
+    elements[i] = items[randomElementNumber];
+    items.splice(randomElementNumber, 1);
   }
-  return elementArr;
+  return elements;
 }
 
 function getAd(ad) {
   ad.location.x = getRandomNumber(MAX_LOCATION_X, MIN_LOCATION_X);
   ad.location.y = getRandomNumber(MAX_LOCATION_Y, MIN_LOCATION_Y);
-  ad.offer.title = getArrowElement(getOfferTitleArr(), getOfferTitleArr().length - 1, 0);
+  ad.offer.title = getElements(getOfferTitles(), getOfferTitles().length - 1, 0);
   ad.offer.address = ad.location.x + ', ' + ad.location.y;
   ad.offer.price = getRandomNumber(1000000, 0);
-  ad.offer.type = getArrowElement(typeArr, typeArr.length - 1, 0);
+  ad.offer.type = getElements(propertyTypes, propertyTypes.length - 1, 0);
   ad.offer.rooms = getRandomNumber(5, 1);
   ad.offer.guests = getRandomNumber(5, 1);
-  ad.offer.checkin = getArrowElement(timeArr, timeArr.length - 1, 0);
+  ad.offer.checkin = getElements(controlTimes, controlTimes.length - 1, 0);
   ad.offer.checkout = ad.offer.checkin;
   ad.offer.features = getOfferFeatures();
   ad.offer.description = descriptionOffer;
@@ -77,7 +77,7 @@ function getAd(ad) {
 }
 
 function getAds(numberAds) {
-  var avatarArr = getAvatarArr();
+  var avatars = getAvatars();
   for (var i = 0; i < numberAds; i++) {
     var ad = {
       author: {
@@ -101,25 +101,24 @@ function getAds(numberAds) {
         y: '',
       },
     };
-    var avatarNumber = getRandomNumber(avatarArr.length - 1, 0);
-    ad.author.avatar = avatarArr[avatarNumber];
-    avatarArr.splice(avatarNumber, 1);
+    var avatarNumber = getRandomNumber(avatars.length - 1, 0);
+    ad.author.avatar = avatars[avatarNumber];
+    avatars.splice(avatarNumber, 1);
     var adElement = getAd(ad);
     ads.push(adElement);
   }
   return ads;
 }
 
-getAds(NUMBER_ADS);
+getAds(NUMBER_AD);
 
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
 
-
-function createNewElements() {
+function createNewElement() {
   var template = document.querySelector('#pin').content.querySelector('.map__pin');
   var fragment = document.createDocumentFragment();
-  for (var i = 0; i < NUMBER_ADS; i++) {
+  for (var i = 0; i < NUMBER_AD; i++) {
     var newElement = template.cloneNode(true);
     newElement.style = 'left: ' + (ads[i].location.x - PIN_X / 2) + 'px; top: ' + (ads[i].location.y - PIN_Y) + 'px;';
     newElement.querySelector('img').src = ads[i].author.avatar;
@@ -129,9 +128,9 @@ function createNewElements() {
   return fragment;
 }
 
-function renderingNewElements() {
+function renderNewElement() {
   var mapPins = document.querySelector('.map__pins');
-  mapPins.appendChild(createNewElements());
+  mapPins.appendChild(createNewElement());
 }
 
-renderingNewElements();
+renderNewElement();
