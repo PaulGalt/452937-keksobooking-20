@@ -76,9 +76,9 @@ function getAd(ad) {
   return ad;
 }
 
-function getAds(numberAds) {
+function getAds(numberAd) {
   var avatars = getAvatars();
-  for (var i = 0; i < numberAds; i++) {
+  for (var i = 0; i < numberAd; i++) {
     var ad = {
       author: {
         avatar: '',
