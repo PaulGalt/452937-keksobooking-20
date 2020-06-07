@@ -129,8 +129,8 @@ function createNewElement() {
 }
 
 function renderNewElement() {
-  var mapPins = document.querySelector('.map__pins');
-  mapPins.appendChild(createNewElement());
+  var pinsMap = document.querySelector('.map__pins');
+  pinsMap.appendChild(createNewElement());
 }
 
 renderNewElement();
