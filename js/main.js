@@ -39,12 +39,12 @@ function getElements(items, maxValue, minValue) {
 
 function getOfferFeatures() {
   var features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-  return getUniqueElements(features, features.length - 1, 0);
+  return getUniqueElements(features, features.length, 0);
 }
 
 function getOfferPhotos() {
   var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-  return getUniqueElements(photos, photos.length - 1, 1);
+  return getUniqueElements(photos, photos.length, 1);
 }
 
 function getUniqueElements(items, maxValue, minValue) {
