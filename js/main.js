@@ -135,32 +135,32 @@ function renderNewElement() {
 
 renderNewElement();
 
-function getCardTitle(template) {
-  if (ads[0].offer.hasOwnProperty('title') && ads[0].offer.title !== '') {
-    template.querySelector('.popup__title').textContent = ads[0].offer.title;
+function setCardTitle(template, title) {
+  if (title) {
+    template.querySelector('.popup__title').textContent = title;
   } else {
     template.querySelector('.popup__title').classList.add('hidden');
   }
 }
 
-function getCardAddress(template) {
-  if (ads[0].offer.hasOwnProperty('address') && ads[0].offer.address !== '') {
-    template.querySelector('.popup__text--address').textContent = ads[0].offer.address;
+function setCardAddress(template, address) {
+  if (address) {
+    template.querySelector('.popup__text--address').textContent = address;
   } else {
     template.querySelector('.popup__text--address').classList.add('hidden');
   }
 }
 
-function getCardPrice(template) {
-  if (ads[0].offer.hasOwnProperty('price') && ads[0].offer.price !== '') {
-    template.querySelector('.popup__text--price').textContent = ads[0].offer.price + '₽/ночь';
+function setCardPrice(template, price) {
+  if (price) {
+    template.querySelector('.popup__text--price').textContent = price + '₽/ночь';
   } else {
     template.querySelector('.popup__text--price').classList.add('hidden');
   }
 }
 
-function getCardType(template) {
-  switch (ads[0].offer.type) {
+function setCardType(template, type) {
+  switch (type) {
     case 'flat':
       template.querySelector('.popup__type').textContent = 'Квартира';
       break;
@@ -178,48 +178,48 @@ function getCardType(template) {
   }
 }
 
-function getCardGuest(template) {
-  if (ads[0].offer.hasOwnProperty('guests') && ads[0].offer.guests !== ''
-  && ads[0].offer.hasOwnProperty('rooms') && ads[0].offer.rooms !== '') {
-    template.querySelector('.popup__text--capacity').textContent = ads[0].offer.rooms + ' комнаты для ' + ads[0].offer.guests + ' гостей';
+function setCardGuest(template, guestNumber, roomNumber) {
+  if (guestNumber && roomNumber) {
+    template.querySelector('.popup__text--capacity').textContent = roomNumber + ' комнаты для ' + guestNumber + ' гостей';
   } else {
     template.querySelector('.popup__text--capacity').classList.add('hidden');
   }
 }
 
-function getCardTime(template) {
-  if (ads[0].offer.hasOwnProperty('checkin') && ads[0].offer.checkin !== ''
-  && ads[0].offer.hasOwnProperty('checkout') && ads[0].offer.checkout !== '') {
-    template.querySelector('.popup__text--time').textContent = 'Заезд после ' + ads[0].offer.checkin + ', выезд до ' + ads[0].offer.checkout;
+function setCardTime(template, checkin, checkout) {
+  if (checkin && checkout) {
+    template.querySelector('.popup__text--time').textContent = 'Заезд после ' + checkin + ', выезд до ' + checkout;
   } else {
     template.querySelector('.popup__text--time').classList.add('hidden');
   }
 }
 
-function getCardFeature(template) {
-  if (ads[0].offer.hasOwnProperty('features') && ads[0].offer.features.length > 0) {
+function setCardFeature(template, features) {
+  if (features) {
     var featuresItems = template.querySelector('.popup__features').children;
     for (var i = 0; i < featuresItems.length; i++) {
       featuresItems[i].classList.add('hidden');
     }
-    for (var j = 0; j < ads[0].offer.features.length; j++) {
-      if (ads[0].offer.features[j] === 'wifi') {
-        template.querySelector('.popup__feature--wifi').classList.remove('hidden');
-      }
-      if (ads[0].offer.features[j] === 'dishwasher') {
-        template.querySelector('.popup__feature--dishwasher').classList.remove('hidden');
-      }
-      if (ads[0].offer.features[j] === 'parking') {
-        template.querySelector('.popup__feature--parking').classList.remove('hidden');
-      }
-      if (ads[0].offer.features[j] === 'washer') {
-        template.querySelector('.popup__feature--washer').classList.remove('hidden');
-      }
-      if (ads[0].offer.features[j] === 'elevator') {
-        template.querySelector('.popup__feature--elevator').classList.remove('hidden');
-      }
-      if (ads[0].offer.features[j] === 'conditioner') {
-        template.querySelector('.popup__feature--conditioner').classList.remove('hidden');
+    for (var j = 0; j < features.length; j++) {
+      switch (features[j]) {
+        case 'wifi':
+          template.querySelector('.popup__feature--wifi').classList.remove('hidden');
+          break;
+        case 'dishwasher':
+          template.querySelector('.popup__feature--dishwasher').classList.remove('hidden');
+          break;
+        case 'parking':
+          template.querySelector('.popup__feature--parking').classList.remove('hidden');
+          break;
+        case 'washer':
+          template.querySelector('.popup__feature--washer').classList.remove('hidden');
+          break;
+        case 'elevator':
+          template.querySelector('.popup__feature--elevator').classList.remove('hidden');
+          break;
+        case 'conditioner':
+          template.querySelector('.popup__feature--conditioner').classList.remove('hidden');
+          break;
       }
     }
   } else {
@@ -227,23 +227,23 @@ function getCardFeature(template) {
   }
 }
 
-function getCardDescription(template) {
-  if (ads[0].offer.hasOwnProperty('description') && ads[0].offer.description !== '') {
-    template.querySelector('.popup__description').textContent = ads[0].offer.description;
+function setCardDescription(template, description) {
+  if (description) {
+    template.querySelector('.popup__description').textContent = description;
   } else {
     template.querySelector('.popup__description').classList.add('hidden');
   }
 }
 
-function getCardPhoto(template) {
-  if (ads[0].offer.hasOwnProperty('photos') && ads[0].offer.photos.length > 0) {
-    for (var i = 0; i < ads[0].offer.photos.length; i++) {
+function setCardPhoto(template, photos) {
+  if (photos) {
+    for (var i = 0; i < photos.length; i++) {
       var photoTemplate = template.querySelector('.popup__photo');
       if (i >= 1) {
         photoTemplate = photoTemplate.cloneNode(true);
       }
       var photoBlock = template.querySelector('.popup__photos');
-      photoTemplate.src = ads[0].offer.photos[i];
+      photoTemplate.src = photos[i];
       photoBlock.appendChild(photoTemplate);
     }
   } else {
@@ -251,36 +251,36 @@ function getCardPhoto(template) {
   }
 }
 
-function getCardAvatar(template) {
-  if (ads[0].author.hasOwnProperty('avatar') && ads[0].author.avatar !== '') {
-    template.querySelector('.popup__avatar').src = ads[0].author.avatar;
+function setCardAvatar(template, avatar) {
+  if (avatar) {
+    template.querySelector('.popup__avatar').src = avatar;
   } else {
     template.querySelector('.popup__avatar').classList.add('hidden');
   }
 }
 
-function createNewCard() {
+function createNewCard(offer) {
   var template = document.querySelector('#card').content.querySelector('.map__card');
   var fragment = document.createDocumentFragment();
   var newCard = template.cloneNode(true);
-  getCardTitle(newCard);
-  getCardAddress(newCard);
-  getCardPrice(newCard);
-  getCardType(newCard);
-  getCardGuest(newCard);
-  getCardTime(newCard);
-  getCardFeature(newCard);
-  getCardDescription(newCard);
-  getCardPhoto(newCard);
-  getCardAvatar(newCard);
+  setCardTitle(newCard, offer.offer.title);
+  setCardAddress(newCard, offer.offer.address);
+  setCardPrice(newCard, offer.offer.price);
+  setCardType(newCard, offer.offer.type);
+  setCardGuest(newCard, offer.offer.guests, offer.offer.rooms);
+  setCardTime(newCard, offer.offer.checkin, offer.offer.checkout);
+  setCardFeature(newCard, offer.offer.features);
+  setCardDescription(newCard, offer.offer.description);
+  setCardPhoto(newCard, offer.offer.photos);
+  setCardAvatar(newCard, offer.author.avatar);
   fragment.appendChild(newCard);
 
   return fragment;
 }
 
-function renderNewCard() {
-  var newElement = createNewCard();
+function renderNewCard(offers) {
+  var newElement = createNewCard(offers[0]);
   map.insertBefore(newElement, map.querySelector('.map__filters-container'));
 }
 
-renderNewCard();
+renderNewCard(ads);
