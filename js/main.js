@@ -531,3 +531,26 @@ guestNumber.addEventListener('change', function () {
   }
 });
 
+function removeAllOffers() {
+  var offers = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+  for (var i = 0; i < offers.length; i++) {
+    offers[i].remove();
+  }
+}
+
+function makeSiteDisabledAgain() {
+  isMakeDisabledMap(true);
+  isMakeDisabledForm(true);
+  map.classList.add('map--faded');
+  form.classList.add('ad-form--disabled');
+  mapPinMain.addEventListener('mousedown', activateSiteOnClick);
+  mapPinMain.addEventListener('keydown', activateSiteOnButton);
+  setNewAddress();
+  removeAllOffers();
+}
+
+form.querySelector('.ad-form__reset').addEventListener('click', function () {
+  form.reset();
+  makeSiteDisabledAgain();
+});
+
