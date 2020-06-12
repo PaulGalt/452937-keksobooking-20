@@ -387,6 +387,7 @@ titleField.addEventListener('input', function () {
   } else {
     titleField.setCustomValidity('');
   }
+  form.reportValidity();
 });
 
 var priceField = form.querySelector('#price');
@@ -430,6 +431,10 @@ priceField.addEventListener('invalid', function () {
   } else {
     priceField.setCustomValidity('');
   }
+});
+
+priceField.addEventListener('input', function () {
+  form.reportValidity();
 });
 
 var checkin = form.querySelector('#timein');
@@ -550,6 +555,12 @@ function makeSiteDisabledAgain() {
 }
 
 form.querySelector('.ad-form__reset').addEventListener('click', function () {
+  form.reset();
+  makeSiteDisabledAgain();
+});
+
+form.querySelector('.ad-form__submit').addEventListener('click', function () {
+  form.submit();
   form.reset();
   makeSiteDisabledAgain();
 });
