@@ -362,15 +362,15 @@ function setNewAddress() {
 
 setNewAddress();
 
-var minTitleLength = 30;
-var maxTitleLength = 100;
+var MIN_TITLE_LENGTH = 30;
+var MAX_TITLE_LENGTH = 100;
 var titleField = form.querySelector('#title');
 
 titleField.addEventListener('invalid', function () {
   if (titleField.validity.tooShort) {
-    titleField.setCustomValidity('Заголовок должен состоять минимум из 30 символов');
+    titleField.setCustomValidity('Заголовок должен состоять минимум из ' + MIN_TITLE_LENGTH + ' символов');
   } else if (titleField.validity.tooLong) {
-    titleField.setCustomValidity('Заголовок не должен превышать 100 символов');
+    titleField.setCustomValidity('Заголовок не должен превышать ' + MAX_TITLE_LENGTH + ' символов');
   } else if (titleField.validity.valueMissing) {
     titleField.setCustomValidity('Обязательное поле');
   } else {
@@ -380,10 +380,10 @@ titleField.addEventListener('invalid', function () {
 
 titleField.addEventListener('input', function () {
   var valueLength = titleField.value.length;
-  if (valueLength < minTitleLength) {
-    titleField.setCustomValidity('Ещё ' + (minTitleLength - valueLength) + ' симв.');
-  } else if (valueLength > maxTitleLength) {
-    titleField.setCustomValidity('Удалите лишние ' + (valueLength - minTitleLength) + ' симв.');
+  if (valueLength < MIN_TITLE_LENGTH) {
+    titleField.setCustomValidity('Ещё ' + (MIN_TITLE_LENGTH - valueLength) + ' симв.');
+  } else if (valueLength > MAX_TITLE_LENGTH) {
+    titleField.setCustomValidity('Удалите лишние ' + (valueLength - MAX_TITLE_LENGTH) + ' симв.');
   } else {
     titleField.setCustomValidity('');
   }
@@ -394,23 +394,28 @@ var priceField = form.querySelector('#price');
 var propertyType = form.querySelector('#type');
 
 function setMinPrice() {
+  var MIN_PALACE_PRICE = 10000;
+  var MIN_HOUSE_PRICE = 5000;
+  var MIN_FLAT_PRICE = 1000;
+  var MIN_BUNGALO_PRICE = 0;
+
   var propertyTypeValue = propertyType.value;
   switch (propertyTypeValue) {
     case 'palace':
-      priceField.min = 10000;
-      priceField.placeholder = 10000;
+      priceField.min = MIN_PALACE_PRICE;
+      priceField.placeholder = MIN_PALACE_PRICE;
       break;
     case 'house':
-      priceField.min = 5000;
-      priceField.placeholder = 5000;
+      priceField.min = MIN_HOUSE_PRICE;
+      priceField.placeholder = MIN_HOUSE_PRICE;
       break;
     case 'flat':
-      priceField.min = 1000;
-      priceField.placeholder = 1000;
+      priceField.min = MIN_FLAT_PRICE;
+      priceField.placeholder = MIN_FLAT_PRICE;
       break;
     default:
-      priceField.min = 0;
-      priceField.placeholder = 0;
+      priceField.min = MIN_BUNGALO_PRICE;
+      priceField.placeholder = MIN_BUNGALO_PRICE;
       break;
   }
 }
