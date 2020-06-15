@@ -291,16 +291,16 @@ var form = document.querySelector('.ad-form');
 var formFieldsets = form.querySelectorAll('fieldset');
 var mapPinMain = document.querySelector('.map__pin--main');
 
-function isMakeDisabledMap(isEnable) {
+function makeDisabledMap(value) {
   for (var i = 0; i < mapFilters.length; i++) {
-    mapFilters[i].disabled = isEnable;
+    mapFilters[i].disabled = value;
   }
-  mapFeature.disabled = isEnable;
+  mapFeature.disabled = value;
 }
 
-function isMakeDisabledForm(isEnable) {
+function makeDisabledForm(value) {
   for (var i = 0; i < formFieldsets.length; i++) {
-    formFieldsets[i].disabled = isEnable;
+    formFieldsets[i].disabled = value;
   }
 }
 
@@ -317,8 +317,8 @@ function activateSiteOnButton(evt) {
 }
 
 function makeSiteDisabled() {
-  isMakeDisabledMap(true);
-  isMakeDisabledForm(true);
+  makeDisabledMap(true);
+  makeDisabledForm(true);
   mapPinMain.addEventListener('mousedown', activateSiteOnClick);
   mapPinMain.addEventListener('keydown', activateSiteOnButton);
 }
@@ -326,8 +326,8 @@ function makeSiteDisabled() {
 makeSiteDisabled();
 
 function makeSiteEnabled() {
-  isMakeDisabledMap(false);
-  isMakeDisabledForm(false);
+  makeDisabledMap(false);
+  makeDisabledForm(false);
   map.classList.remove('map--faded');
   form.classList.remove('ad-form--disabled');
   mapPinMain.removeEventListener('mousedown', activateSiteOnClick);
@@ -338,7 +338,7 @@ function makeSiteEnabled() {
   setGuestNumber();
 }
 
-function mainPinPosition() {
+function setMainPinPosition() {
   var mainPinPositionX = mapPinMain.style.left;
   var mainPinPositionY = mapPinMain.style.top;
 
@@ -354,10 +354,10 @@ function mainPinPosition() {
 }
 
 function setNewAddress() {
-  var newAddressX = mainPinPosition()[0];
-  var newAddressY = mainPinPosition()[1];
+  var newAddressX = setMainPinPosition()[0];
+  var newAddressY = setMainPinPosition()[1];
   var addressField = form.querySelector('#address');
-  addressField.value = newAddressX + ' + расстояние до острого конца по горизонтали, ' + newAddressY + ' + расстояние до острого конца по вертикали';
+  addressField.value = newAddressX + ' , ' + newAddressY;
 }
 
 setNewAddress();
@@ -368,9 +368,9 @@ var titleField = form.querySelector('#title');
 
 titleField.addEventListener('invalid', function () {
   if (titleField.validity.tooShort) {
-    titleField.setCustomValidity('Заголовок должен состоять минимум из 30-х символов');
+    titleField.setCustomValidity('Заголовок должен состоять минимум из 30 символов');
   } else if (titleField.validity.tooLong) {
-    titleField.setCustomValidity('Заголоаок не должен превышать 100-ти символов');
+    titleField.setCustomValidity('Заголовок не должен превышать 100 символов');
   } else if (titleField.validity.valueMissing) {
     titleField.setCustomValidity('Обязательное поле');
   } else {
@@ -387,7 +387,7 @@ titleField.addEventListener('input', function () {
   } else {
     titleField.setCustomValidity('');
   }
-  form.reportValidity();
+  titleField.reportValidity();
 });
 
 var priceField = form.querySelector('#price');
@@ -417,6 +417,7 @@ function setMinPrice() {
 
 propertyType.addEventListener('change', function () {
   setMinPrice();
+  priceField.reportValidity();
 });
 
 priceField.addEventListener('invalid', function () {
@@ -434,7 +435,7 @@ priceField.addEventListener('invalid', function () {
 });
 
 priceField.addEventListener('input', function () {
-  form.reportValidity();
+  priceField.reportValidity();
 });
 
 var checkin = form.querySelector('#timein');
@@ -472,68 +473,76 @@ function setGuestNumber() {
   switch (roomNumber.value) {
     case '1':
       guestNumber.querySelector('option[value = "1"]').disabled = false;
-      guestNumber.querySelector('option[value = "1"]').selected = true;
+      if (guestNumber.value === '1') {
+        guestNumber.setCustomValidity('');
+      } else {
+        guestNumber.setCustomValidity('Максимальное количество гостей - 1');
+      }
       break;
     case '2':
       guestNumber.querySelector('option[value = "1"]').disabled = false;
       guestNumber.querySelector('option[value = "2"]').disabled = false;
-      guestNumber.querySelector('option[value = "1"]').selected = true;
+      if (guestNumber.value === '1' || guestNumber.value === '2') {
+        guestNumber.setCustomValidity('');
+      } else {
+        guestNumber.setCustomValidity('Максимальное количество гостей - 2');
+      }
       break;
     case '3':
       guestNumber.querySelector('option[value = "1"]').disabled = false;
       guestNumber.querySelector('option[value = "2"]').disabled = false;
       guestNumber.querySelector('option[value = "3"]').disabled = false;
-      guestNumber.querySelector('option[value = "1"]').selected = true;
+      if (guestNumber.value !== '0') {
+        guestNumber.setCustomValidity('');
+      } else {
+        guestNumber.setCustomValidity('Максимальное количество гостей - 3');
+      }
       break;
     case '100':
       guestNumber.querySelector('option[value = "0"]').disabled = false;
-      guestNumber.querySelector('option[value = "0"]').selected = true;
+      if (guestNumber.value === '0') {
+        guestNumber.setCustomValidity('');
+      } else {
+        guestNumber.setCustomValidity('Не для гостей :))');
+      }
       break;
   }
+  guestNumber.reportValidity();
 }
 
-function setRoomNumber() {
-  var rooms = roomNumber.children;
-  for (var i = 0; i < rooms.length; i++) {
-    rooms[i].disabled = true;
-  }
+function setRoomValidity() {
   switch (guestNumber.value) {
     case '3':
-      roomNumber.querySelector('option[value = "3"]').disabled = false;
-      roomNumber.querySelector('option[value = "3"]').selected = true;
+      if (roomNumber.value === '3') {
+        guestNumber.setCustomValidity('');
+      }
       break;
     case '2':
-      roomNumber.querySelector('option[value = "3"]').disabled = false;
-      roomNumber.querySelector('option[value = "2"]').disabled = false;
-      roomNumber.querySelector('option[value = "2"]').selected = true;
+      if (roomNumber.value === '3' || roomNumber.value === '2') {
+        guestNumber.setCustomValidity('');
+      }
       break;
     case '1':
-      roomNumber.querySelector('option[value = "1"]').disabled = false;
-      roomNumber.querySelector('option[value = "2"]').disabled = false;
-      roomNumber.querySelector('option[value = "3"]').disabled = false;
-      roomNumber.querySelector('option[value = "1"]').selected = true;
+      if (roomNumber.value === '1' || roomNumber.value === '2' || roomNumber.value === '3') {
+        guestNumber.setCustomValidity('');
+      }
       break;
     case '0':
-      roomNumber.querySelector('option[value = "100"]').disabled = false;
-      roomNumber.querySelector('option[value = "100"]').selected = true;
+      if (roomNumber.value === '100') {
+        guestNumber.setCustomValidity('');
+      }
       break;
   }
+  guestNumber.reportValidity();
 }
 
-roomNumber.addEventListener('change', function () {
-  setGuestNumber();
-  var rooms = roomNumber.children;
-  for (var i = 0; i < rooms.length; i++) {
-    rooms[i].disabled = false;
-  }
+guestNumber.addEventListener('change', function () {
+  setRoomValidity();
 });
 
-guestNumber.addEventListener('change', function () {
-  setRoomNumber();
-  var guests = guestNumber.children;
-  for (var i = 0; i < guests.length; i++) {
-    guests[i].disabled = false;
-  }
+roomNumber.addEventListener('change', function () {
+  setRoomValidity();
+  setGuestNumber();
 });
 
 function removeAllOffers() {
@@ -543,25 +552,24 @@ function removeAllOffers() {
   }
 }
 
-function makeSiteDisabledAgain() {
-  isMakeDisabledMap(true);
-  isMakeDisabledForm(true);
-  map.classList.add('map--faded');
-  form.classList.add('ad-form--disabled');
-  mapPinMain.addEventListener('mousedown', activateSiteOnClick);
-  mapPinMain.addEventListener('keydown', activateSiteOnButton);
-  setNewAddress();
-  removeAllOffers();
-}
-
 form.querySelector('.ad-form__reset').addEventListener('click', function () {
   form.reset();
-  makeSiteDisabledAgain();
+  makeSiteDisabled();
+  map.classList.add('map--faded');
+  form.classList.add('ad-form--disabled');
+  setNewAddress();
+  removeAllOffers();
 });
 
 form.querySelector('.ad-form__submit').addEventListener('click', function () {
-  form.submit();
-  form.reset();
-  makeSiteDisabledAgain();
+  if (form.invalid) {
+    form.submit();
+    form.reset();
+    makeSiteDisabled();
+    map.classList.add('map--faded');
+    form.classList.add('ad-form--disabled');
+    setNewAddress();
+    removeAllOffers();
+  }
 });
 
