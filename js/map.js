@@ -6,14 +6,14 @@
   var PIN_X = 50;
   var PIN_Y = 70;
 
-  function createNewElement() {
+  function createNewElement(items) {
     var template = document.querySelector('#pin').content.querySelector('.map__pin');
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < window.data.ads.length; i++) {
+    for (var i = 0; i < items.length; i++) {
       var newElement = template.cloneNode(true);
-      newElement.style = 'left: ' + (window.data.ads[i].location.x - PIN_X / 2) + 'px; top: ' + (window.data.ads[i].location.y - PIN_Y) + 'px;';
-      newElement.querySelector('img').src = window.data.ads[i].author.avatar;
-      newElement.querySelector('img').alt = window.data.ads[i].offer.title;
+      newElement.style = 'left: ' + (items[i].location.x - PIN_X / 2) + 'px; top: ' + (items[i].location.y - PIN_Y) + 'px;';
+      newElement.querySelector('img').src = items[i].author.avatar;
+      newElement.querySelector('img').alt = items[i].offer.title;
       fragment.appendChild(newElement);
     }
     return fragment;
@@ -34,9 +34,9 @@
 
       return mainPinPositions;
     },
-    renderMap: function () {
+    renderMap: function (items) {
       var pinsMap = document.querySelector('.map__pins');
-      pinsMap.appendChild(createNewElement());
+      pinsMap.appendChild(createNewElement(items));
     }
   };
 
