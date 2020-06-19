@@ -56,7 +56,8 @@
     form.classList.remove('ad-form--disabled');
     mapPinMain.removeEventListener('mousedown', activateSiteOnClick);
     mapPinMain.removeEventListener('keydown', activateSiteOnButton);
-    window.map.renderMap();
+
+    window.download();
   }
 
   window.main = {
