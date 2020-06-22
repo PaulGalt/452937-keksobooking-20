@@ -139,16 +139,65 @@
     setCardDescription(newCard, offer.offer.description);
     setCardPhoto(newCard, offer.offer.photos);
     setCardAvatar(newCard, offer.author.avatar);
+    newCard.classList.add('hidden');
     fragment.appendChild(newCard);
 
     return fragment;
   }
 
-  function renderNewCard(offers) {
-    var newElement = createNewCard(offers[0]);
-    window.main.map.insertBefore(newElement, window.main.map.querySelector('.map__filters-container'));
-  }
+  var map = document.querySelector('.map');
 
-  renderNewCard(window.data.ads);
+  map.addEventListener('click', function (evt) {
+    if (evt.target.parentNode.classList.contains('map__pin')) {
+      var title = evt.target.alt;
+      var cards = map.querySelectorAll('.map__card');
+
+      for (var i = 0; i < cards.length; i++) {
+        cards[i].classList.add('hidden');
+        if (title === cards[i].querySelector('.popup__title').textContent) {
+          cards[i].classList.remove('hidden');
+        }
+      }
+    }
+    if (evt.target.classList.contains('popup__close')) {
+      evt.target.parentNode.classList.add('hidden');
+    }
+  });
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Enter') {
+      if (evt.target.classList.contains('map__pin')) {
+        var title = evt.target.querySelector('img').alt;
+        var cards = map.querySelectorAll('.map__card');
+
+        for (var i = 0; i < cards.length; i++) {
+          cards[i].classList.add('hidden');
+          if (title === cards[i].querySelector('.popup__title').textContent) {
+            cards[i].classList.remove('hidden');
+          }
+        }
+      }
+    }
+  });
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Escape') {
+      if (document.querySelector('.map__card:not(.hidden)')) {
+        document.querySelector('.map__card:not(.hidden)').classList.add('hidden');
+      }
+    }
+  });
+
+  window.card = {
+    renderCards: function (data) {
+      var fragment = document.createDocumentFragment();
+      for (var i = 0; i < data.length; i++) {
+        var newElement = createNewCard(data[i]);
+        fragment.appendChild(newElement);
+      }
+
+      window.main.map.insertBefore(fragment, window.main.map.querySelector('.map__filters-container'));
+    }
+  };
 
 })();
