@@ -148,8 +148,12 @@
   var map = document.querySelector('.map');
 
   map.addEventListener('click', function (evt) {
-    if (evt.target.parentNode.classList.contains('map__pin')) {
-      var title = evt.target.alt;
+    if (evt.target.classList.contains('map__pin') || evt.target.parentNode.classList.contains('map__pin')) {
+      if (evt.target.classList.contains('map__pin')) {
+        var title = evt.target.querySelector('img').alt;
+      } else {
+        title = evt.target.alt;
+      }
       var cards = map.querySelectorAll('.map__card');
 
       for (var i = 0; i < cards.length; i++) {
@@ -181,10 +185,8 @@
   });
 
   document.addEventListener('keydown', function (evt) {
-    if (evt.key === 'Escape') {
-      if (document.querySelector('.map__card:not(.hidden)')) {
-        document.querySelector('.map__card:not(.hidden)').classList.add('hidden');
-      }
+    if (evt.key === 'Escape' && document.querySelector('.map__card:not(.hidden)')) {
+      document.querySelector('.map__card:not(.hidden)').classList.add('hidden');
     }
   });
 
