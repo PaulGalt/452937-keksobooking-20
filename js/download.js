@@ -9,6 +9,7 @@
 
     xhr.addEventListener('load', function () {
       window.map.renderMap(xhr.response);
+      window.card.renderCards(xhr.response);
     });
 
     xhr.open('GET', URL);
