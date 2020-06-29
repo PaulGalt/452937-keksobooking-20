@@ -40,15 +40,6 @@
     }
   }
 
-  function makeSiteDisabled() {
-    makeDisabledMap(true);
-    makeDisabledForm(true);
-    mapPinMain.addEventListener('mousedown', activateSiteOnClick);
-    mapPinMain.addEventListener('keydown', activateSiteOnButton);
-  }
-
-  makeSiteDisabled();
-
   function makeSiteEnabled() {
     makeDisabledMap(false);
     makeDisabledForm(false);
@@ -56,7 +47,6 @@
     form.classList.remove('ad-form--disabled');
     mapPinMain.removeEventListener('mousedown', activateSiteOnClick);
     mapPinMain.removeEventListener('keydown', activateSiteOnButton);
-
     window.download();
   }
 
@@ -74,4 +64,6 @@
       mapPinMain.addEventListener('keydown', activateSiteOnButton);
     },
   };
+
+  window.main.makeDisabledSite();
 })();
