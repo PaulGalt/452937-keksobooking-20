@@ -193,7 +193,7 @@
   window.card = {
     renderCards: function (data) {
       var fragment = document.createDocumentFragment();
-      var maxCard = 5;
+      var maxCard = window.MAX_OFFER;
       if (data.length < maxCard) {
         maxCard = data.length;
       }

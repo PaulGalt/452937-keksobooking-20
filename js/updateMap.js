@@ -5,12 +5,13 @@
   var MAIN_PIN_Y = 84;
   var PIN_X = 50;
   var PIN_Y = 70;
+  window.MAX_OFFER = 5;
 
   function createNewElement(items) {
     var template = document.querySelector('#pin').content.querySelector('.map__pin');
     var fragment = document.createDocumentFragment();
 
-    var maxPin = 5;
+    var maxPin = window.MAX_OFFER;
     if (items.length < maxPin) {
       maxPin = items.length;
     }
