@@ -193,7 +193,11 @@
   window.card = {
     renderCards: function (data) {
       var fragment = document.createDocumentFragment();
-      for (var i = 0; i < data.length; i++) {
+      var maxCard = window.MAX_OFFER;
+      if (data.length < maxCard) {
+        maxCard = data.length;
+      }
+      for (var i = 0; i < maxCard; i++) {
         var newElement = createNewCard(data[i]);
         fragment.appendChild(newElement);
       }

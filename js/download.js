@@ -8,8 +8,7 @@
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      window.map.renderMap(xhr.response);
-      window.card.renderCards(xhr.response);
+      window.updateMap(xhr.response, window.filter);
     });
 
     xhr.open('GET', URL);
