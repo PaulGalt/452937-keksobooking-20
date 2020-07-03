@@ -2,11 +2,6 @@
 
 (function () {
 
-  var MIN_LOCATION_X = 0;
-  var MAX_LOCATION_X = 1200;
-  var MIN_LOCATION_Y = 130;
-  var MAX_LOCATION_Y = 630;
-
   var map = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
   var mapFilterBlock = document.querySelector('.map__filters');
@@ -48,13 +43,10 @@
     mapPinMain.removeEventListener('mousedown', activateSiteOnClick);
     mapPinMain.removeEventListener('keydown', activateSiteOnButton);
     window.download();
+    window.setNewAddress(window.startMainPinPositionX, window.startMainPinPositionY);
   }
 
   window.main = {
-    MIN_LOCATION_X: MIN_LOCATION_X,
-    MAX_LOCATION_X: MAX_LOCATION_X,
-    MIN_LOCATION_Y: MIN_LOCATION_Y,
-    MAX_LOCATION_Y: MAX_LOCATION_Y,
     map: map,
     mapPinMain: mapPinMain,
     makeDisabledSite: function () {
@@ -62,6 +54,11 @@
       makeDisabledForm(true);
       mapPinMain.addEventListener('mousedown', activateSiteOnClick);
       mapPinMain.addEventListener('keydown', activateSiteOnButton);
+      document.querySelector('.map').classList.add('map--faded');
+      document.querySelector('.ad-form').classList.add('ad-form--disabled');
+      document.querySelector('.map__pin--main').style.left = window.startMainPinPositionX + 'px';
+      document.querySelector('.map__pin--main').style.top = window.startMainPinPositionY + 'px';
+      window.setNewAddress(window.startMainPinPositionX, window.startMainPinPositionY);
     },
   };
 
