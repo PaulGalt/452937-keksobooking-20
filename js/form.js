@@ -9,14 +9,17 @@
   var MIN_BUNGALO_PRICE = 0;
   var titleField = document.querySelector('#title');
 
-  function setNewAddress() {
-    var newAddressX = window.map.setMainPinPosition()[0];
-    var newAddressY = window.map.setMainPinPosition()[1];
+  window.setNewAddress = function (mainPinX, mainPinY) {
+    var newAddressX = mainPinX + window.MAIN_PIN_X / 2;
+    var newAddressY = mainPinY + window.MAIN_PIN_Y;
+    if (window.main.map.classList.contains('map--faded')) {
+      newAddressY = mainPinY + window.MAIN_PIN_X / 2;
+    }
     var addressField = document.querySelector('#address');
     addressField.value = newAddressX + ' , ' + newAddressY;
-  }
+  };
 
-  setNewAddress();
+  window.setNewAddress(window.startMainPinPositionX, window.startMainPinPositionY);
 
   titleField.addEventListener('invalid', function () {
     if (titleField.validity.tooShort) {
@@ -188,6 +191,9 @@
     guestNumber.reportValidity();
   }
 
+  setRoomValidity();
+  setGuestNumber();
+
   guestNumber.addEventListener('change', function () {
     setRoomValidity();
   });
@@ -207,20 +213,16 @@
   document.querySelector('.ad-form__reset').addEventListener('click', function () {
     document.querySelector('.ad-form').reset();
     window.main.makeDisabledSite();
-    document.querySelector('.map').classList.add('map--faded');
-    document.querySelector('.ad-form').classList.add('ad-form--disabled');
-    setNewAddress();
+    window.setNewAddress(window.startMainPinPositionX, window.startMainPinPositionY);
     removeAllOffers();
   });
 
   document.querySelector('.ad-form__submit').addEventListener('click', function () {
-    if (document.querySelector('.ad-form').invalid) {
+    if (document.querySelector('.ad-form').checkValidity()) {
       document.querySelector('.ad-form').submit();
       document.querySelector('.ad-form').reset();
       window.main.makeDisabledSite();
-      document.querySelector('.map').classList.add('map--faded');
-      document.querySelector('.ad-form').classList.add('ad-form--disabled');
-      setNewAddress();
+      window.setNewAddress(window.startMainPinPositionX, window.startMainPinPositionY);
       removeAllOffers();
     }
   });
