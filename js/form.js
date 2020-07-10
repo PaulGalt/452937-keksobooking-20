@@ -213,6 +213,7 @@
   document.querySelector('.ad-form__reset').addEventListener('click', function () {
     document.querySelector('.ad-form').reset();
     window.main.makeDisabledSite();
+    window.setNewAddress(window.startMainPinPositionX, window.startMainPinPositionY);
     removeAllOffers();
   });
 
@@ -221,6 +222,7 @@
       document.querySelector('.ad-form').submit();
       document.querySelector('.ad-form').reset();
       window.main.makeDisabledSite();
+      window.setNewAddress(window.startMainPinPositionX, window.startMainPinPositionY);
       removeAllOffers();
     }
   });

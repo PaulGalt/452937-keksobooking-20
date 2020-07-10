@@ -58,7 +58,6 @@
       document.querySelector('.ad-form').classList.add('ad-form--disabled');
       document.querySelector('.map__pin--main').style.left = window.startMainPinPositionX + 'px';
       document.querySelector('.map__pin--main').style.top = window.startMainPinPositionY + 'px';
-      window.setNewAddress(window.startMainPinPositionX, window.startMainPinPositionY);
     },
   };
 
