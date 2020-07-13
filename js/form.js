@@ -217,9 +217,9 @@
     removeAllOffers();
   });
 
-  document.querySelector('.ad-form__submit').addEventListener('click', function (evn) {
+  document.querySelector('.ad-form__submit').addEventListener('click', function (evt) {
     if (document.querySelector('.ad-form').checkValidity()) {
-      evn.preventDefault();
+      evt.preventDefault();
       window.ajax('POST', new FormData(document.querySelector('.ad-form')));
       document.querySelector('.ad-form').reset();
       window.main.makeDisabledSite();

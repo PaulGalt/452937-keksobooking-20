@@ -7,7 +7,7 @@
     xhr.responseType = 'json';
 
     if (type === 'GET') {
-      var URL = 'https://javascript.pages.academy/keksobooking/data';
+      var url = 'https://javascript.pages.academy/keksobooking/data';
 
       xhr.addEventListener('load', function () {
         window.updateMap(xhr.response, window.filter);
@@ -15,7 +15,7 @@
     }
 
     if (type === 'POST') {
-      URL = 'https://javascript.pages.academy/keksobooking';
+      url = 'https://javascript.pages.academy/keksobooking';
 
       xhr.addEventListener('load', function () {
         if (xhr.statusText === 'OK') {
@@ -26,7 +26,7 @@
       });
     }
 
-    xhr.open(type, URL);
+    xhr.open(type, url);
     xhr.send(data);
   };
 
