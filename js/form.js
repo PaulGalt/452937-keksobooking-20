@@ -217,9 +217,10 @@
     removeAllOffers();
   });
 
-  document.querySelector('.ad-form__submit').addEventListener('click', function () {
+  document.querySelector('.ad-form__submit').addEventListener('click', function (evt) {
     if (document.querySelector('.ad-form').checkValidity()) {
-      document.querySelector('.ad-form').submit();
+      evt.preventDefault();
+      window.ajax('POST', new FormData(document.querySelector('.ad-form')));
       document.querySelector('.ad-form').reset();
       window.main.makeDisabledSite();
       window.setNewAddress(window.startMainPinPositionX, window.startMainPinPositionY);

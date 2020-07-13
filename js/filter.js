@@ -10,6 +10,6 @@
     window.filter = {
       propertyType: document.querySelector('#housing-type').value,
     };
-    window.download();
+    window.ajax('GET');
   });
 })();

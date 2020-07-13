@@ -42,7 +42,7 @@
     form.classList.remove('ad-form--disabled');
     mapPinMain.removeEventListener('mousedown', activateSiteOnClick);
     mapPinMain.removeEventListener('keydown', activateSiteOnButton);
-    window.download();
+    window.ajax('GET');
     window.setNewAddress(window.startMainPinPositionX, window.startMainPinPositionY);
   }
 
