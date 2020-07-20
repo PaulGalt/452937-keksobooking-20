@@ -7,6 +7,8 @@
   var MIN_HOUSE_PRICE = 5000;
   var MIN_FLAT_PRICE = 1000;
   var MIN_BUNGALO_PRICE = 0;
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+  var PHOTO_SIZE = 70;
   var titleField = document.querySelector('#title');
 
   window.setNewAddress = function (mainPinX, mainPinY) {
@@ -201,6 +203,57 @@
   roomNumber.addEventListener('change', function () {
     setRoomValidity();
     setGuestNumber();
+  });
+
+  var fileChooserAvatar = document.querySelector('.ad-form__field input[type=file]');
+  var previewAvatar = document.querySelector('.ad-form-header__preview img');
+  var fileChooserProperty = document.querySelector('.ad-form__upload input[type=file]');
+  var previewProperty = document.querySelector('.ad-form__photo');
+
+  fileChooserAvatar.addEventListener('change', function () {
+    var file = fileChooserAvatar.files[0];
+    var fileName = file.name.toLowerCase();
+
+    var matches = FILE_TYPES.some(function (it) {
+      return fileName.endsWith(it);
+    });
+
+    if (matches) {
+      var reader = new FileReader();
+
+      reader.addEventListener('load', function () {
+        previewAvatar.src = reader.result;
+      });
+
+      reader.readAsDataURL(file);
+    }
+  });
+
+  fileChooserProperty.addEventListener('change', function () {
+    var file = fileChooserProperty.files[0];
+    var fileName = file.name.toLowerCase();
+
+    var matches = FILE_TYPES.some(function (it) {
+      return fileName.endsWith(it);
+    });
+
+    if (matches) {
+      var reader = new FileReader();
+
+      reader.addEventListener('load', function () {
+        var fragment = document.createDocumentFragment();
+        fragment = document.createElement('img');
+        fragment.src = reader.result;
+        fragment.width = PHOTO_SIZE;
+        fragment.height = PHOTO_SIZE;
+        if (previewProperty.querySelector('img')) {
+          previewProperty.removeChild(previewProperty.childNodes[0]);
+        }
+        previewProperty.appendChild(fragment);
+      });
+
+      reader.readAsDataURL(file);
+    }
   });
 
   function removeAllOffers() {
