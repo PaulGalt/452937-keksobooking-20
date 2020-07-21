@@ -44,116 +44,116 @@
   }
 
   function checkPropertyType(offers, filter) {
-    var newOffersTemp = [];
+    var newTempOffers = [];
     if (filter.propertyType === 'any') {
-      newOffersTemp = offers;
+      newTempOffers = offers;
     } else {
       for (var i = 0; i < offers.length; i++) {
         if (offers[i].offer.type === filter.propertyType) {
-          newOffersTemp.push(offers[i]);
+          newTempOffers.push(offers[i]);
         }
       }
     }
-    return newOffersTemp;
+    return newTempOffers;
   }
 
   function checkPropertyPrice(offers, filter) {
     if (filter.propertyPrice !== 'any') {
-      var newOffersTemp = [];
+      var newTempOffers = [];
 
       for (var i = 0; i < offers.length; i++) {
         switch (filter.propertyPrice) {
           case 'low':
             if (offers[i].offer.price <= 10000) {
-              newOffersTemp.push(offers[i]);
+              newTempOffers.push(offers[i]);
             }
             break;
           case 'high':
             if (offers[i].offer.price >= 50000) {
-              newOffersTemp.push(offers[i]);
+              newTempOffers.push(offers[i]);
             }
             break;
           case 'middle':
             if (offers[i].offer.price > 10000 && offers[i].offer.price < 50000) {
-              newOffersTemp.push(offers[i]);
+              newTempOffers.push(offers[i]);
             }
             break;
         }
       }
     } else {
-      newOffersTemp = offers;
+      newTempOffers = offers;
     }
-    return newOffersTemp;
+    return newTempOffers;
   }
 
   function checkPropertyRooms(offers, filter) {
     if (filter.propertyRooms !== 'any') {
-      var newOffersTemp = [];
+      var newTempOffers = [];
 
       for (var i = 0; i < offers.length; i++) {
         switch (filter.propertyRooms) {
           case '1':
             if (String(offers[i].offer.rooms) === '1') {
-              newOffersTemp.push(offers[i]);
+              newTempOffers.push(offers[i]);
             }
             break;
           case '2':
             if (String(offers[i].offer.rooms) === '2') {
-              newOffersTemp.push(offers[i]);
+              newTempOffers.push(offers[i]);
             }
             break;
           case '3':
             if (String(offers[i].offer.rooms) === '3') {
-              newOffersTemp.push(offers[i]);
+              newTempOffers.push(offers[i]);
             }
             break;
         }
       }
     } else {
-      newOffersTemp = offers;
+      newTempOffers = offers;
     }
-    return newOffersTemp;
+    return newTempOffers;
   }
 
   function checkPropertyGuests(offers, filter) {
     if (filter.propertyGuests !== 'any') {
-      var newOffersTemp = [];
+      var newTempOffers = [];
 
       for (var i = 0; i < offers.length; i++) {
         switch (String(offers[i].offer.guests)) {
           case '1':
             if (filter.propertyGuests === '1') {
-              newOffersTemp.push(offers[i]);
+              newTempOffers.push(offers[i]);
             }
             break;
           case '2':
             if (filter.propertyGuests === '2') {
-              newOffersTemp.push(offers[i]);
+              newTempOffers.push(offers[i]);
             }
             break;
           default:
             if (filter.propertyGuests === '0') {
-              newOffersTemp.push(offers[i]);
+              newTempOffers.push(offers[i]);
             }
             break;
         }
       }
     } else {
-      newOffersTemp = offers;
+      newTempOffers = offers;
     }
-    return newOffersTemp;
+    return newTempOffers;
   }
 
   function checkFeatures(offers, type) {
-    var newOffersTemp = [];
+    var newTempOffers = [];
     for (var i = 0; i < offers.length; i++) {
       for (var j = 0; j < offers[i].offer.features.length; j++) {
         if (offers[i].offer.features[j] === type) {
-          newOffersTemp.push(offers[i]);
+          newTempOffers.push(offers[i]);
         }
       }
     }
-    return newOffersTemp;
+    return newTempOffers;
   }
 
   window.updateMap = function (offers, filter) {

@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-
   window.ajax = function (type, data) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';

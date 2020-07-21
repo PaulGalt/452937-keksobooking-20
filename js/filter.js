@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-
   function checkFeatures(type) {
     var features = document.querySelectorAll('#housing-features input');
 

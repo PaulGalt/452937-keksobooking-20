@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-
   var map = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
   var mapFilterBlock = document.querySelector('.map__filters');
@@ -23,13 +22,13 @@
     }
   }
 
-  function activateSiteOnClick(evt) {
+  function onMainPinMouseClick(evt) {
     if (evt.button === 0) {
       makeSiteEnabled();
     }
   }
 
-  function activateSiteOnButton(evt) {
+  function onMainPinButtonClick(evt) {
     if (evt.key === 'Enter') {
       makeSiteEnabled();
     }
@@ -40,8 +39,8 @@
     makeDisabledForm(false);
     map.classList.remove('map--faded');
     form.classList.remove('ad-form--disabled');
-    mapPinMain.removeEventListener('mousedown', activateSiteOnClick);
-    mapPinMain.removeEventListener('keydown', activateSiteOnButton);
+    mapPinMain.removeEventListener('mousedown', onMainPinMouseClick);
+    mapPinMain.removeEventListener('keydown', onMainPinButtonClick);
     window.ajax('GET');
     window.setNewAddress(window.startMainPinPositionX, window.startMainPinPositionY);
   }
@@ -52,8 +51,8 @@
     makeDisabledSite: function () {
       makeDisabledMap(true);
       makeDisabledForm(true);
-      mapPinMain.addEventListener('mousedown', activateSiteOnClick);
-      mapPinMain.addEventListener('keydown', activateSiteOnButton);
+      mapPinMain.addEventListener('mousedown', onMainPinMouseClick);
+      mapPinMain.addEventListener('keydown', onMainPinButtonClick);
       document.querySelector('.map').classList.add('map--faded');
       document.querySelector('.ad-form').classList.add('ad-form--disabled');
       document.querySelector('.map__pin--main').style.left = window.startMainPinPositionX + 'px';
