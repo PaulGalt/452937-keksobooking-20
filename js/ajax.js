@@ -9,6 +9,7 @@
       var url = 'https://javascript.pages.academy/keksobooking/data';
 
       xhr.addEventListener('load', function () {
+        window.offers = xhr.response;
         window.updateMap(xhr.response, window.filter);
       });
     }

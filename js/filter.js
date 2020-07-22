@@ -37,26 +37,26 @@
 
   document.querySelector('#housing-type').addEventListener('change', function () {
     window.filter.propertyType = document.querySelector('#housing-type').value;
-    window.debounce(window.ajax('GET'));
+    window.debounce(window.updateMap(window.offers, window.filter));
   });
 
   document.querySelector('#housing-price').addEventListener('change', function () {
     window.filter.propertyPrice = document.querySelector('#housing-price').value;
-    window.debounce(window.ajax('GET'));
+    window.debounce(window.updateMap(window.offers, window.filter));
   });
 
   document.querySelector('#housing-rooms').addEventListener('change', function () {
     window.filter.propertyRooms = document.querySelector('#housing-rooms').value;
-    window.debounce(window.ajax('GET'));
+    window.debounce(window.updateMap(window.offers, window.filter));
   });
 
   document.querySelector('#housing-guests').addEventListener('change', function () {
     window.filter.propertyGuests = document.querySelector('#housing-guests').value;
-    window.debounce(window.ajax('GET'));
+    window.debounce(window.updateMap(window.offers, window.filter));
   });
 
   document.querySelector('#housing-features').addEventListener('change', function () {
     getFilterValue();
-    window.debounce(window.ajax('GET'));
+    window.debounce(window.updateMap(window.offers, window.filter));
   });
 })();

@@ -3,6 +3,10 @@
 (function () {
   var PIN_X = 50;
   var PIN_Y = 70;
+  var CHEAP_PRICE = 10000;
+  var EXPENSIV_PRICE = 50000;
+  var RoomFilterValues = [1, 2, 3];
+  var GuestFilterValues = [0, 1, 2];
   window.MAX_OFFER = 5;
 
   function createNewElement(items) {
@@ -64,17 +68,17 @@
       for (var i = 0; i < offers.length; i++) {
         switch (filter.propertyPrice) {
           case 'low':
-            if (offers[i].offer.price <= 10000) {
+            if (offers[i].offer.price < CHEAP_PRICE) {
               newTempOffers.push(offers[i]);
             }
             break;
           case 'high':
-            if (offers[i].offer.price >= 50000) {
+            if (offers[i].offer.price > EXPENSIV_PRICE) {
               newTempOffers.push(offers[i]);
             }
             break;
           case 'middle':
-            if (offers[i].offer.price > 10000 && offers[i].offer.price < 50000) {
+            if (offers[i].offer.price >= CHEAP_PRICE && offers[i].offer.price <= EXPENSIV_PRICE) {
               newTempOffers.push(offers[i]);
             }
             break;
@@ -91,19 +95,19 @@
       var newTempOffers = [];
 
       for (var i = 0; i < offers.length; i++) {
-        switch (filter.propertyRooms) {
-          case '1':
-            if (String(offers[i].offer.rooms) === '1') {
+        switch (+filter.propertyRooms) {
+          case RoomFilterValues[0]:
+            if (offers[i].offer.rooms === RoomFilterValues[0]) {
               newTempOffers.push(offers[i]);
             }
             break;
-          case '2':
-            if (String(offers[i].offer.rooms) === '2') {
+          case RoomFilterValues[1]:
+            if (offers[i].offer.rooms === RoomFilterValues[1]) {
               newTempOffers.push(offers[i]);
             }
             break;
-          case '3':
-            if (String(offers[i].offer.rooms) === '3') {
+          case RoomFilterValues[2]:
+            if (offers[i].offer.rooms === RoomFilterValues[2]) {
               newTempOffers.push(offers[i]);
             }
             break;
@@ -120,19 +124,19 @@
       var newTempOffers = [];
 
       for (var i = 0; i < offers.length; i++) {
-        switch (String(offers[i].offer.guests)) {
-          case '1':
-            if (filter.propertyGuests === '1') {
+        switch (offers[i].offer.guests) {
+          case GuestFilterValues[1]:
+            if (+filter.propertyGuests === GuestFilterValues[1]) {
               newTempOffers.push(offers[i]);
             }
             break;
-          case '2':
-            if (filter.propertyGuests === '2') {
+          case GuestFilterValues[2]:
+            if (+filter.propertyGuests === GuestFilterValues[2]) {
               newTempOffers.push(offers[i]);
             }
             break;
           default:
-            if (filter.propertyGuests === '0') {
+            if (+filter.propertyGuests === GuestFilterValues[0]) {
               newTempOffers.push(offers[i]);
             }
             break;

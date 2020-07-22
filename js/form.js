@@ -9,6 +9,8 @@
   var MIN_BUNGALO_PRICE = 0;
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var PHOTO_SIZE = 70;
+  var RoomsValues = ['100', '1', '2', '3'];
+  var GuestValue = ['0', '1', '2', '3'];
   var titleField = document.querySelector('#title');
 
   window.setNewAddress = function (mainPinX, mainPinY) {
@@ -72,6 +74,8 @@
     }
   }
 
+  setMinPrice();
+
   propertyType.addEventListener('change', function () {
     setMinPrice();
     priceField.reportValidity();
@@ -128,36 +132,36 @@
       guests[i].disabled = true;
     }
     switch (roomNumber.value) {
-      case '1':
+      case RoomsValues[1]:
         guestNumber.querySelector('option[value = "1"]').disabled = false;
-        if (guestNumber.value === '1') {
+        if (guestNumber.value === GuestValue[1]) {
           guestNumber.setCustomValidity('');
         } else {
           guestNumber.setCustomValidity('Максимальное количество гостей - 1');
         }
         break;
-      case '2':
+      case RoomsValues[2]:
         guestNumber.querySelector('option[value = "1"]').disabled = false;
         guestNumber.querySelector('option[value = "2"]').disabled = false;
-        if (guestNumber.value === '1' || guestNumber.value === '2') {
+        if (guestNumber.value === GuestValue[1] || guestNumber.value === GuestValue[2]) {
           guestNumber.setCustomValidity('');
         } else {
           guestNumber.setCustomValidity('Максимальное количество гостей - 2');
         }
         break;
-      case '3':
+      case RoomsValues[3]:
         guestNumber.querySelector('option[value = "1"]').disabled = false;
         guestNumber.querySelector('option[value = "2"]').disabled = false;
         guestNumber.querySelector('option[value = "3"]').disabled = false;
-        if (guestNumber.value !== '0') {
+        if (guestNumber.value !== GuestValue[0]) {
           guestNumber.setCustomValidity('');
         } else {
           guestNumber.setCustomValidity('Максимальное количество гостей - 3');
         }
         break;
-      case '100':
+      case RoomsValues[0]:
         guestNumber.querySelector('option[value = "0"]').disabled = false;
-        if (guestNumber.value === '0') {
+        if (guestNumber.value === GuestValue[0]) {
           guestNumber.setCustomValidity('');
         } else {
           guestNumber.setCustomValidity('Не для гостей :))');
@@ -169,23 +173,23 @@
 
   function setRoomValidity() {
     switch (guestNumber.value) {
-      case '3':
-        if (roomNumber.value === '3') {
+      case GuestValue[3]:
+        if (roomNumber.value === RoomsValues[3]) {
           guestNumber.setCustomValidity('');
         }
         break;
-      case '2':
-        if (roomNumber.value === '3' || roomNumber.value === '2') {
+      case GuestValue[2]:
+        if (roomNumber.value === RoomsValues[3] || roomNumber.value === RoomsValues[2]) {
           guestNumber.setCustomValidity('');
         }
         break;
-      case '1':
-        if (roomNumber.value === '1' || roomNumber.value === '2' || roomNumber.value === '3') {
+      case GuestValue[1]:
+        if (roomNumber.value === RoomsValues[1] || roomNumber.value === RoomsValues[2] || roomNumber.value === RoomsValues[3]) {
           guestNumber.setCustomValidity('');
         }
         break;
-      case '0':
-        if (roomNumber.value === '100') {
+      case GuestValue[0]:
+        if (roomNumber.value === RoomsValues[0]) {
           guestNumber.setCustomValidity('');
         }
         break;
@@ -258,8 +262,13 @@
 
   function removeAllOffers() {
     var offers = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    var cards = document.querySelectorAll('.map__card');
     for (var i = 0; i < offers.length; i++) {
       offers[i].remove();
+    }
+
+    for (var j = 0; j < cards.length; j++) {
+      cards[j].remove();
     }
   }
 
